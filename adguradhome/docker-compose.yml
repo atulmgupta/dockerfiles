@@ -16,7 +16,7 @@ services:
       - 68:68/tcp
       - 68:68/udp
       - 80:80/tcp
-      - 443:443/tcp
+      - 5084:443/tcp
       - 853:853/tcp
       - 3000:3000/tcp
     restart: unless-stopped
