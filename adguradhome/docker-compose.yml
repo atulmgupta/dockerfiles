@@ -1,0 +1,32 @@
+---
+version: "3"
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /dozer/docker/adguard/data:/opt/adguardhome/work
+      - /dozer/docker/adguard/config:/opt/adguardhome/conf
+    ports:
+      - 53:53/udp
+      - 67:67/udp
+      - 68:68/tcp
+      - 68:68/udp
+      - 80:80/tcp
+      - 443:443/tcp
+      - 853:853/tcp
+      - 3000:3000/tcp
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.adguardhome.rule: "Host(`adguard.rehash.dev`)"
+      traefik.http.routers.adguardhome.tls.certresolver: "letsencrypt"
+      traefik.http.routers.adguardhome.tls.domains[0].main: "rehash.dev"
+      traefik.http.routers.adguardhome.tls.domains[0].sans: "*.rehash.dev"
+      traefik.http.services.adguardhome.loadbalancer.server.port: "3000"
+      traefik.http.routers.adguardhome.entryPoints: "https"
+      traefik.http.routers.adguardhome.tls: "true"
+      traefik.http.routers.adguardhome.middlewares: "authelia@docker"
