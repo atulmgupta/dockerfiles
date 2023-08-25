@@ -11,14 +11,13 @@ services:
       - /dozer/docker/adguard/data:/opt/adguardhome/work
       - /dozer/docker/adguard/config:/opt/adguardhome/conf
     ports:
-      - 53:53/udp
-      - 67:67/udp
-      - 68:68/tcp
-      - 68:68/udp
-      - 5083:80/tcp
-      - 5084:443/tcp
-      - 853:853/tcp
-      - 3000:3000/tcp
+      - "53:53/udp"
+      - "67:67/udp"
+      - "68:68/tcp,68:68/udp"
+      - "5083:80/tcp"
+      - "5084:443/tcp"
+      - "853:853/tcp"
+      - "3000:3000/tcp"
     restart: unless-stopped
     labels:
       traefik.enable: "true"
